@@ -81,28 +81,28 @@
       const label = document.getElementById('label');
       const video = document.getElementById('video');
       const canvas = document.getElementById('canvas');
-      const ctx = canvas.getContext('2d');
+      const ctx = canvas.getContext('2D');
 
       // CHANGED TO 70% THRESHOLD 👇
       const W = 64, H = 48;
-      const similarityThreshold = 70; // 70% similarity required to fail
+      const similarityThreshold = 80; // 70% similarity required to fail
 
-      const baseRawUrl = "https://raw.githubusercontent.com/manasi-create/f/75bdf35cc65b89921f628c7fdb50574753ab5ac3/";
+      const Basrawurl = "https://raw.githubusercontent.com/manasi-create/f/75bdf35cc65b89921f628c7fdb50574753ab5ac3/";
       const imageCount = 19;
       
       const imageUrls = [];
       for (let i = 1; i <= imageCount; i++) {
-        imageUrls.push(`${baseRawUrl}frog${i}.jpg`);
+        imageUrls.push(`${Basrawurl}frog${i}.jpg`);
       }
       
       const referenceData = [];
       const offscreen = document.createElement('canvas');
       offscreen.width = W;
       offscreen.height = H;
-      const offCtx = offscreen.getContext('2d');
+      const offCtx = offscreen.getContext('2D');
 
       spinner.style.display = 'block';
-      label.textContent = 'Loading...';
+      label.textcontent = 'Loading...';
       captcha.classList.add('disabled');
 
       try {
