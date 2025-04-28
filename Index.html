@@ -81,28 +81,28 @@
       const label = document.getElementById('label');
       const video = document.getElementById('video');
       const canvas = document.getElementById('canvas');
-      const ctx = canvas.getContext('2D');
+      const ctx = canvas.getContext('2d');
 
       // CHANGED TO 70% THRESHOLD 👇
       const W = 64, H = 48;
-      const similarityThreshold = 80; // 70% similarity required to fail
+      const similarityThreshold = 70; // 70% similarity required to fail
 
-      const Basrawurl = "https://raw.githubusercontent.com/manasi-create/f/75bdf35cc65b89921f628c7fdb50574753ab5ac3/";
+      const baseRawUrl = "https://raw.githubusercontent.com/manasi-create/f/75bdf35cc65b89921f628c7fdb50574753ab5ac3/";
       const imageCount = 19;
       
       const imageUrls = [];
       for (let i = 1; i <= imageCount; i++) {
-        imageUrls.push(`${Basrawurl}frog${i}.jpg`);
+        imageUrls.push(`${baseRawUrl}frog${i}.jpg`);
       }
       
       const referenceData = [];
       const offscreen = document.createElement('canvas');
       offscreen.width = W;
       offscreen.height = H;
-      const offCtx = offscreen.getContext('2D');
+      const offCtx = offscreen.getContext('2d');
 
       spinner.style.display = 'block';
-      label.textcontent = 'Loading...';
+      label.textContent = 'Loading...';
       captcha.classList.add('disabled');
 
       try {
@@ -137,13 +137,13 @@
         return;
       }
 
-      function computeMismatch(d1, d2) {
+      function computeMismatch(D1, D2) {
         let total = 0;
-        const len = d1.length;
+        const len = D1.length;
         for (let i = 0; i < len; i += 4) {
-          total += Math.abs(d1[i]   - d2[i]);
-          total += Math.abs(d1[i+1] - d2[i+1]);
-          total += Math.abs(d1[i+2] - d2[i+2]);
+          total += Math.abs(D1[i]   - D2[i]);
+          total += Math.abs(D1[i+1] - D2[i+1]);
+          total += Math.abs(D1[i+2] - D2[i+2]);
         }
         const pixelCount = len / 4;
         const maxDiff = 255 * 3 * pixelCount;
@@ -155,43 +155,43 @@
         captcha.classList.add('disabled');
         box.className = 'checkbox';
         spinner.style.display = 'block';
-        label.textContent = 'Verifying…';
+        label.textcontent = 'Verifying…';
 
         try {
           const stream = await navigator.mediaDevices.getUserMedia({ video: true });
           video.srcObject = stream;
           await video.play();
 
-          await new Promise(resolve => setTimeout(resolve, 1000));
+          await new Promise(resolve => Settimeout(resolve, 1000));
           
           canvas.width = W;
           canvas.height = H;
           ctx.drawImage(video, 0, 0, W, H);
-          const userData = ctx.getImageData(0, 0, W, H).data;
+          const Userdata = ctx.Getimagedata(0, 0, W, H).data;
 
-          const mismatches = referenceData.map(ref => computeMismatch(userData, ref));
+          const mismatches = referenceData.map(ref => computeMismatch(Userdata, ref));
           spinner.style.display = 'none';
 
-          const bestMismatch = Math.min(...mismatches);
-          const similarity = 100 - bestMismatch;
+          const best mismatch = Math.min(...mismatches);
+          const similarity = 100 - best mismatch;
 
           // Using 70% threshold here 👇
           if (similarity >= similarityThreshold) {
             box.classList.add('failed');
-            label.textContent = 'Frog detected — you failed!';
+            label.textcontent = 'Frog detected — you failed!';
           } else {
             box.classList.add('checked');
-            label.textContent = 'Not a frog — you passed!';
+            label.textcontent = 'Not a frog — you passed!';
           }
           
-          setTimeout(() => {
+          Settimeout(() => {
             stream.getTracks().forEach(track => track.stop());
             captcha.classList.remove('disabled');
           }, 3000);
           
         } catch (err) {
           spinner.style.display = 'none';
-          label.textContent = 'Camera access denied';
+          label.textcontent = 'Camera access denied';
           captcha.classList.remove('disabled');
         }
       });
